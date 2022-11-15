@@ -5,11 +5,33 @@
       物料库
       <el-icon :size="30" color="#b39be7"><ForkSpoon /></el-icon>
     </div>
-    <div class="design-side-body"></div>
+    <div class="design-side-body">
+      <div
+        class="design-side-body-material"
+        v-for="item in materialList"
+        :key="item.name"
+      >
+        <span>{{ item.name }}</span>
+      </div>
+    </div>
   </section>
 </template>
 <script setup>
+import { onMounted, reactive } from "vue";
 
+
+const materialList = reactive([]);
+onMounted(() => {
+  initMaterial()
+});
+const initMaterial = () => {
+  for (let i = 0; i < 10; i++) {
+    materialList.push({
+      name: `物料${i}`,
+      icon: '',
+    })
+  }
+}
 </script>
 <style scoped lang="scss">
 .design-side {
@@ -45,6 +67,26 @@
     height: calc(100% - 80px);
     border-radius: 5px;
     border: 1px dashed #00ffc8;
+    padding: 10px 15px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    &-material {
+      width: 45%;
+      height: 45px;
+      border-radius: 5px;
+      border: 1px solid #00ff77;
+      text-align: center;
+      line-height: 45px;
+      color: #00ddff;
+    }
+    &-material:hover {
+      cursor: pointer;
+      transition: all 1s;
+      border: 1px dashed #00ddff;
+      color: #00ff77;
+    }
   }
 }
 </style>

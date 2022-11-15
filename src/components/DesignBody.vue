@@ -1,6 +1,7 @@
 <template>
   <section class="design-body">
     <div id="scene" ref="scene"></div>
+    <div class="design-body-view">视图</div>
   </section>
 </template>
 
@@ -12,9 +13,12 @@ import {
   Mesh, MeshPhongMaterial, BoxGeometry, AmbientLight, GridHelper
 } from 'three';
 import * as THREE from 'three';
+import { DragControls } from 'three/examples/jsm/controls/DragControls';
+import { TransformControls } from 'three/examples/jsm/controls/TransformControls';
 const scene = ref();
 let T, composerer, outlinePasser;
 let selectedObjects = [];
+let dragObjects = [];
 
 onMounted(() => {
   initScene();
@@ -38,9 +42,11 @@ const initScene = () => {
   });
   composerer = composer;
   outlinePasser = outlinePass;
+
   initLight();
   scene.value.addEventListener('click', raySelect, false);
   createManyBox();
+  initDragTransformControls();
 };
 const render = () => {
   // T.renderer.render(T.scene, T.camera);
@@ -89,15 +95,40 @@ const addBox = () => {
   let line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0x888888 }));
   let box = new Mesh(geo, mat);
   let group = new THREE.Object3D();
-  group.add(box, line)
+  group.add(box)
+  dragObjects.push(group);  // 可以拖拽的数组
   return group;
 };
-
+const dragControlsRender = () => {
+  T.renderer.render(T.scene, T.camera);
+}
 const addSelectedObject = obj => {
   selectedObjects = [];
   selectedObjects.push(obj);
+};
+const initDragTransformControls = () => {
+  var dragControls = new DragControls(dragObjects, T.camera, T.renderer.domElement);
+  // 鼠标略过事件
+  dragControls.addEventListener('hoveron', function (event) {
+    console.log("createDragControls hoveron", event);
+    // 让变换控件对象和选中的对象绑定
+  });
+  // 开始拖拽
+  dragControls.addEventListener('dragstart', function (event) {
+    console.log("createDragControls dragstart");
+    T.controls.enabled = false;
+  });
+  // 拖拽过程
+  dragControls.addEventListener('drag', function (event) {
+    console.log("createDragControls drag");
+    dragControlsRender();
+  });
+  // 拖拽结束
+  dragControls.addEventListener('dragend', function (event) {
+    console.log("createDragControls dragend");
+    T.controls.enabled = true;
+  });
 }
-
 
 </script>
 
@@ -105,11 +136,31 @@ const addSelectedObject = obj => {
 .design-body {
   width: calc(100% - 650px);
   height: 100%;
+  position: relative;
   border-radius: 5px;
   border: 1px dashed #00ffc8;
   #scene {
     width: 100%;
     height: 100%;
+  }
+  &-view {
+    position: absolute;
+    top: 20px;
+    right: 0px;
+    width: 50px;
+    height: 50px;
+    border-radius: 25px 0 0 25px;
+    border: 1px solid #ffea00;
+    text-align: center;
+    line-height: 50px;
+    font-size: 18px;
+    -webkit-text-stroke: 1px #00eeff;
+    color: transparent;
+  }
+  &-view:hover {
+    transition: all 5s ease-in;
+    border-radius: 50% 0 0 50%;
+    border: 1px dashed #00ff26;
   }
 }
 </style>
