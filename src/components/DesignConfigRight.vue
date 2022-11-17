@@ -1,22 +1,14 @@
 <template>
-  <section class="design-side">
-    <div class="design-side-title">
-      <el-icon :size="26" color="#b39be7"><FolderChecked /></el-icon>
-      物料库
-      <el-icon :size="26" color="#b39be7"><ForkSpoon /></el-icon>
+  <section class="design-config-side">
+    <div class="design-config-side-title">
+      <el-icon :size="26" color="#94e792"><Setting /></el-icon>
+      配置库
+      <el-icon :size="26" color="#94e792"><Notebook /></el-icon>
     </div>
-    <div class="design-side-body">
-      <div
-        class="design-side-body-material"
-        v-for="item in materialList"
-        :key="item.name"
-      >
-        <span>{{ item.name }}</span>
-      </div>
-    </div>
+    <div class="design-config-side-body"></div>
   </section>
 </template>
-<script setup>
+  <script setup>
 import { onMounted, reactive } from "vue";
 
 
@@ -32,9 +24,9 @@ const initMaterial = () => {
     })
   }
 }
-</script>
-<style scoped lang="scss">
-.design-side {
+  </script>
+  <style scoped lang="scss">
+.design-config-side {
   width: 350px;
   height: 100%;
   display: flex;
@@ -47,13 +39,13 @@ const initMaterial = () => {
     width: 90%;
     height: 60px;
     border-radius: 8px;
-    border: 1px dashed #00ffc8;
+    border: 1px dashed #0095ff;
     padding: 0 50px;
     font-size: 25px;
     font-weight: 500;
     font-family: "Times New Roman", Times, serif;
     letter-spacing: 10px;
-    -webkit-text-stroke: 1px #00aaff;
+    -webkit-text-stroke: 1px #d4ff00;
     color: transparent;
     text-align: center;
     // margin-top: 10px;
@@ -66,7 +58,7 @@ const initMaterial = () => {
     width: 90%;
     height: calc(100% - 80px);
     border-radius: 5px;
-    border: 1px dashed #00ffc8;
+    border: 1px dashed #d0ff00;
     padding: 10px 15px;
     display: flex;
     flex-wrap: wrap;
@@ -90,3 +82,4 @@ const initMaterial = () => {
   }
 }
 </style>
+  

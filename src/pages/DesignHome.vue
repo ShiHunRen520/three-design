@@ -4,6 +4,7 @@
     <div class="design-home-container">
       <DesignSide />
       <DesignBody />
+      <DesignConfigRight />
     </div>
   </section>
 </template>
@@ -11,7 +12,8 @@
 <script setup>
 import DesignHeader from '../components/DesignHeader.vue';
 import DesignSide from '../components/DesignSide.vue';
-import DesignBody from '../components/DesignBody.vue'
+import DesignBody from '../components/DesignBody.vue';
+import DesignConfigRight from '../components/DesignConfigRight.vue';
 </script>
 
 <style lang="scss" scoped>
