@@ -1,9 +1,9 @@
 <template>
   <section class="design-side">
     <div class="design-side-title">
-      <el-icon :size="26" color="#b39be7"><FolderChecked /></el-icon>
+      <el-icon :size="20" color="#b39be7"><FolderChecked /></el-icon>
       物料库
-      <el-icon :size="26" color="#b39be7"><ForkSpoon /></el-icon>
+      <el-icon :size="20" color="#b39be7"><ForkSpoon /></el-icon>
     </div>
     <div class="design-side-body">
       <div
@@ -25,7 +25,7 @@ onMounted(() => {
   initMaterial()
 });
 const initMaterial = () => {
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 3; i++) {
     materialList.push({
       name: `物料${i}`,
       icon: '',
@@ -49,7 +49,7 @@ const initMaterial = () => {
     border-radius: 8px;
     border: 1px dashed #00ffc8;
     padding: 0 50px;
-    font-size: 25px;
+    font-size: 18px;
     font-weight: 500;
     font-family: "Times New Roman", Times, serif;
     letter-spacing: 10px;
@@ -66,17 +66,17 @@ const initMaterial = () => {
     width: 90%;
     height: calc(100% - 80px);
     border-radius: 5px;
-    border: 1px dashed #00ffc8;
+    border: 1px dashed #e100ff;
     padding: 10px 15px;
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     &-material {
       width: 45%;
       height: 45px;
       border-radius: 5px;
-      border: 1px solid #00ff77;
+      border: 1px solid #aab125;
       text-align: center;
       line-height: 45px;
       color: #00ddff;

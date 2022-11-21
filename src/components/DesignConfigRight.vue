@@ -1,9 +1,9 @@
 <template>
   <section class="design-config-side">
     <div class="design-config-side-title">
-      <el-icon :size="26" color="#94e792"><Setting /></el-icon>
+      <el-icon :size="20" color="#94e792"><Setting /></el-icon>
       配置库
-      <el-icon :size="26" color="#94e792"><Notebook /></el-icon>
+      <el-icon :size="20" color="#94e792"><Notebook /></el-icon>
     </div>
     <div class="design-config-side-body"></div>
   </section>
@@ -41,7 +41,7 @@ const initMaterial = () => {
     border-radius: 8px;
     border: 1px dashed #0095ff;
     padding: 0 50px;
-    font-size: 25px;
+    font-size: 18px;
     font-weight: 500;
     font-family: "Times New Roman", Times, serif;
     letter-spacing: 10px;

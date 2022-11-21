@@ -10,8 +10,9 @@ import { onMounted, ref } from 'vue';
 import Hscene from '../utils/Hscene';
 import { usePostProcessing } from '../utils/usePostProcessing';
 import {
-  Mesh, MeshPhongMaterial, BoxGeometry, AmbientLight, GridHelper
+  Mesh, MeshPhongMaterial, BoxGeometry, AmbientLight, GridHelper, Clock
 } from 'three';
+import { ViewHelper } from '../utils/ViewHelper';
 import * as THREE from 'three';
 import { DragControls } from 'three/examples/jsm/controls/DragControls';
 import { TransformControls } from 'three/examples/jsm/controls/TransformControls';
@@ -19,7 +20,8 @@ const scene = ref();
 let T, composerer, outlinePasser;
 let selectedObjects = [];
 let dragObjects = [];
-
+let viewHelper = null;
+const clock = new Clock();
 onMounted(() => {
   initScene();
   render();
@@ -34,6 +36,8 @@ const initScene = () => {
   T.scene.add(grid);
   T.camera.position.z = 100;
   T.camera.position.y = 20;
+  viewHelper = new ViewHelper(T.camera, scene.value);
+  viewHelper.controls = T.controls;
   let { composer, outlinePass } = usePostProcessing({
     visibleEdgeColor: '#00fee9',
     hiddenEdgeColor: '#FFFFFF',
@@ -42,15 +46,20 @@ const initScene = () => {
   });
   composerer = composer;
   outlinePasser = outlinePass;
-
   initLight();
   scene.value.addEventListener('click', raySelect, false);
   createManyBox();
   initDragTransformControls();
 };
 const render = () => {
+  T.renderer.clear()
+  const delta = clock.getDelta();
+  if (viewHelper.animating === true) {
+    viewHelper.update(delta);
+  }
   // T.renderer.render(T.scene, T.camera);
   composerer.render();
+  viewHelper ? viewHelper.render(T.renderer) : '';
   requestAnimationFrame(render);
 };
 const initLight = () => {
