@@ -6,7 +6,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import Hscene from '../utils/Hscene';
 import { usePostProcessing } from '../utils/usePostProcessing';
 import {
@@ -16,16 +16,31 @@ import { ViewHelper } from '../utils/ViewHelper';
 import * as THREE from 'three';
 import { DragControls } from 'three/examples/jsm/controls/DragControls';
 import { TransformControls } from 'three/examples/jsm/controls/TransformControls';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 const scene = ref();
 let T, composerer, outlinePasser;
 let selectedObjects = [];
 let dragObjects = [];
 let viewHelper = null;
+
+const modelUrl = ref(localStorage.getItem('modelUrl'))
 const clock = new Clock();
 onMounted(() => {
   initScene();
   render();
+  // const modelUrl = localStorage.getItem('modelUrl')
+  // console.log(localStorage.getItem('modelUrl'), 'modelpath ')
+  // if (modelUrl) {
+  //   new GLTFLoader().load(modelUrl, model => {
+  //     console.log(model, 'jjjjsjsj');
+  //     // T.scene.add(model)
+  //   })
+  // }
 });
+watch(() => modelUrl, (newValue, oldVlue) => {
+  console.log(localStorage.getItem('modelUrl'), 'modelpath ')
+  console.log(newValue, 'kkkkkkkk', oldVlue)
+})
 const initScene = () => {
   T = new Hscene({
     container: scene.value,
