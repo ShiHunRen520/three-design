@@ -32,38 +32,24 @@ const fileName = ref();
 function checkFile () {
   document.querySelector('#fileinput').click()
 }
-function checkFileSure (val) {
-  console.log(document.querySelector('#fileinput').files[0])
+function checkFileSure (e) {
+  console.log(e.target?.files[0], 'kkllslls')
   const files = document.querySelector('#fileinput').files;
-  let rootFile, rootPath;
-  if (!files.length) return;
-  const fileMap = new Map();
-  Array.from(files).forEach(file => fileMap.set(file.name, file));
-  Array.from(fileMap).forEach(([path, file]) => {
-    if (file.name.match(/\.(gltf|glb)$/)) {
-      rootFile = file;
-      rootPath = path.replace(file.name, "");
+  const fd = new FormData()
+  fd.append('file', files[0])
+  fetch("http://localhost:3005/api/upload", {
+    method: 'POST',
+    body: fd,
+  }).then(res => {
+    if (res.ok) {
+      console.log('success')
+      return res.json()
+    } else {
+      console.log('error')
     }
-  });
-  const fileUrl = URL.createObjectURL(rootFile);
-  console.log(fileUrl, 'Model path');
-  // localStorage.setItem('modelUrl', fileUrl);
-  const index = fileUrl.lastIndexOf("/");
-  const baseURL = index === -1 ? "./" : fileUrl.substr(0, index + 1);
-  const normalizedURL =
-    rootPath +
-    decodeURI(fileUrl)
-      .replace(baseURL, "")
-      .replace(/^(\.?\/)/, "");
-  fileMap.set("normalizedURL", normalizedURL)
-  console.log(fileMap, 'lllllllllllll')
-  if (fileMap.has(normalizedURL)) {
-    const blob = fileMap.get(normalizedURL);
-    const blobURL = URL.createObjectURL(blob);
-    // blobURLs.push(blobURL);
-    console.log(blobURL, 'aiiiiiiijjjjjjjjjjjjj');
-  }
-  // this.fileName = document.querySelector('#fileinput').files[0].name
+  }).then(res => {
+    console.log('res is', res)
+  })
 }
 </script>
 

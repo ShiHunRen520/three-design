@@ -30,12 +30,13 @@ onMounted(() => {
   render();
   // const modelUrl = localStorage.getItem('modelUrl')
   // console.log(localStorage.getItem('modelUrl'), 'modelpath ')
-  // if (modelUrl) {
-  //   new GLTFLoader().load(modelUrl, model => {
-  //     console.log(model, 'jjjjsjsj');
-  //     // T.scene.add(model)
-  //   })
-  // }
+
+  new GLTFLoader().load('/upload/81d8d584d28951de28dff5ae6345666c.glb', model => {
+    console.log(model, 'jjjjsjsj');
+    model.scene.scale.set(20, 20, 20)
+    T.scene.add(model.scene)
+    dragObjects.push(model.scene)
+  })
 });
 watch(() => modelUrl, (newValue, oldVlue) => {
   console.log(localStorage.getItem('modelUrl'), 'modelpath ')
